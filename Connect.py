@@ -59,7 +59,7 @@ class Ui_MainWindow(object):
         self.input_fullname = QtWidgets.QLineEdit(self.G_specclass)
         self.input_fullname.setGeometry(QtCore.QRect(260, 90, 151, 20))
         self.input_fullname.setObjectName("input_fullname")
-        self.input_fullname.setPlaceholderText("رضا رضایی")
+        self.input_fullname.setPlaceholderText("Reza Rezai")
         self.input_studentnu = QtWidgets.QLineEdit(self.G_specclass)
         self.input_studentnu.setGeometry(QtCore.QRect(20, 90, 151, 20))
         self.input_studentnu.setObjectName("input_studentnu")
