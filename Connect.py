@@ -5,7 +5,7 @@ from urllib.parse import urlencode
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        MainWindow.setObjectName("دانشگاه ازاد اسلامی قوچان  | اتصال به کلاس")
+        MainWindow.setObjectName("Islamic Azad University Connect to the class")
         MainWindow.setFixedSize(640, 480)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -23,12 +23,12 @@ class Ui_MainWindow(object):
         self.G_tip = QtWidgets.QGroupBox(self.centralwidget)
         self.G_tip.setGeometry(QtCore.QRect(20, 225, 605, 140))
         self.G_tip.setObjectName("G_tip")
-        #comboBoxs
+        
+	#comboBoxs
         self.CB_ostad = QtWidgets.QComboBox(self.G_specclass)
         self.CB_ostad.setGeometry(QtCore.QRect(21, 30, 351, 21))
         self.CB_ostad.setObjectName("CB_ostad")
-        #TODO List Ostad Ha 
-        op = ["محمد مجرب","Python","Soft98","DuckDuckGo"] 
+        op = ["Mr.Mojareb"] 
         for x in op:
         	self.CB_ostad.addItem(x)
         
@@ -54,7 +54,8 @@ class Ui_MainWindow(object):
         self.L_tip2 = QtWidgets.QLabel(self.G_tip)
         self.L_tip2.setGeometry(QtCore.QRect(280, 70, 300, 40))
         self.L_tip2.setObjectName("L_tip2")
-        #Input
+        
+	#Input
         self.input_fullname = QtWidgets.QLineEdit(self.G_specclass)
         self.input_fullname.setGeometry(QtCore.QRect(260, 90, 151, 20))
         self.input_fullname.setObjectName("input_fullname")
@@ -63,7 +64,8 @@ class Ui_MainWindow(object):
         self.input_studentnu.setGeometry(QtCore.QRect(20, 90, 151, 20))
         self.input_studentnu.setObjectName("input_studentnu")
         self.input_studentnu.setPlaceholderText("982154321")
-        #RadioButton
+        
+	#RadioButton
         self.RB_adobe = QtWidgets.QRadioButton(self.G_connect)
         self.RB_adobe.setGeometry(QtCore.QRect(10, 20, 61, 17))
         self.RB_adobe.setObjectName("RB_adobe")
@@ -85,6 +87,7 @@ class Ui_MainWindow(object):
         self.BT_flash.setGeometry(QtCore.QRect(50, 85, 101, 23))
         self.BT_flash.setObjectName("BT_flash")
         self.BT_flash.setText("Adobe Flash")
+
         #TextBrowser
         self.T_link = QtWidgets.QTextBrowser(self.G_linkclass)
         self.T_link.setGeometry(QtCore.QRect(5, 19, 595, 61))
