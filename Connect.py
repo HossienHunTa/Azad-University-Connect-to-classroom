@@ -106,19 +106,19 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "دانشگاه ازاد اسلامی قوچان  | اتصال به کلاس"))
-        self.G_specclass.setTitle(_translate("MainWindow", "مشخصات کلاس"))
-        self.L_ostad.setText(_translate("MainWindow", "استاد :"))
-        self.L_fullname.setText(_translate("MainWindow", "نام و نام خانوادگی :"))
-        self.L_studentnu.setText(_translate("MainWindow", "شماره دانشجویی :"))
-        self.G_connect.setTitle(_translate("MainWindow", "نوع اتصال"))
-        self.RB_adobe.setText(_translate("MainWindow", "نرم افزار"))
-        self.RB_browser.setText(_translate("MainWindow", "مرورگر"))
-        self.BT_link.setText(_translate("MainWindow", "دریافت لینک"))
-        self.G_linkclass.setTitle(_translate("MainWindow", "لینک کلاس"))
-        self.G_tip.setTitle(_translate("MainWindow", "راهنما"))
-        self.L_tip.setText(_translate("MainWindow", "در حالت نرم افزار شما باید برنامه Adobe Connect را نصب کنید.\n\nاگر برنامه را ندارید رو دکمه Adobe Connect کلیک کنید."))
-        self.L_tip2.setText(_translate("MainWindow", "در حالت مرورگر شما باید برنامه Adobe Flash Player را نصب کنید.\n\nاگر برنامه را ندارید رو دکمه Adobe Flash کلیک کنید."))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Islamic Azad University Connect to the class"))
+        self.G_specclass.setTitle(_translate("MainWindow", "Class specifications"))
+        self.L_ostad.setText(_translate("MainWindow", "Professor :"))
+        self.L_fullname.setText(_translate("MainWindow", "Full name :"))
+        self.L_studentnu.setText(_translate("MainWindow", "Student Number :"))
+        self.G_connect.setTitle(_translate("MainWindow", "Connection type"))
+        self.RB_adobe.setText(_translate("MainWindow", "Software"))
+        self.RB_browser.setText(_translate("MainWindow", "Browser"))
+        self.BT_link.setText(_translate("MainWindow", "Get the link"))
+        self.G_linkclass.setTitle(_translate("MainWindow", "Class link"))
+        self.G_tip.setTitle(_translate("MainWindow", "Tip"))
+        self.L_tip.setText(_translate("MainWindow", "In software mode, you must install the Adobe Connect application.\n\nIf you do not have the application, click the Adobe Connect button."))
+        self.L_tip2.setText(_translate("MainWindow", "In browser mode you must install Adobe Flash Player.\n\nIf you do not have the program, click the Adobe Flash button."))
         
     def flash(self):
     	webbrowser.open("https://soft98.ir/software/flash-tools/29-adobe-flash-player.html")
@@ -133,9 +133,9 @@ class Ui_MainWindow(object):
     	studentnu = str(self.input_studentnu.text())
     	con = self.RB_browser.isChecked()
     	if fullname == "":
-    		self.L_errorname.setText("نام خود را وارد کنید !!")
+    		self.L_errorname.setText("Enter your name !!")
     	if studentnu == "":
-    		self.L_errornu.setText("درست وارد کنید!!")
+    		self.L_errornu.setText("Enter correctly !!")
     	
     	i = urlencode({
     			'guestName':f"{studentnu}-{fullname}",
@@ -152,10 +152,7 @@ class Ui_MainWindow(object):
     		})
 
     	masters_link = {
-    	'محمد مجرب': f"http://class.iauq.ac.ir/C40020?{i}",
-    	'DuckDuckGo':"https://DuckDuckGo.com",
-    	'Python':"https://Python.org",
-    	'Soft98':"https://soft98.ir",
+    	'Mr.Mojareb': f"http://class.iauq.ac.ir/C40020?{i}",
     	}
     	if ostad in masters_link:
     		send = masters_link[ostad]
