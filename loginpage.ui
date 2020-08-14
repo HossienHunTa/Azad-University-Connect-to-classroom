@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>loginpage</class>
+ <widget class="QMainWindow" name="loginpage">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>200</width>
+    <height>170</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>200</width>
+    <height>170</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>200</width>
+    <height>170</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>صفحه ورود</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLineEdit" name="inputuser">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>20</y>
+      <width>140</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="dragEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="readOnly">
+     <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>شماره دانشجویی</string>
+    </property>
+    <property name="cursorMoveStyle">
+     <enum>Qt::LogicalMoveStyle</enum>
+    </property>
+    <property name="clearButtonEnabled">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="inputpass">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>60</y>
+      <width>140</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="dragEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="readOnly">
+     <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>رمز عبور</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="submit">
+    <property name="geometry">
+     <rect>
+      <x>58</x>
+      <y>100</y>
+      <width>90</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ورود</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>200</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuLang">
+    <property name="title">
+     <string>زبان</string>
+    </property>
+    <addaction name="langen"/>
+    <addaction name="langffa"/>
+   </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>راهنما</string>
+    </property>
+    <addaction name="action"/>
+   </widget>
+   <addaction name="menuLang"/>
+   <addaction name="menu"/>
+  </widget>
+  <action name="langen">
+   <property name="text">
+    <string>En</string>
+   </property>
+  </action>
+  <action name="langffa">
+   <property name="text">
+    <string>Fa</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>درباره من</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>submit</sender>
+   <signal>clicked()</signal>
+   <receiver>loginpage</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>102</x>
+     <y>135</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>99</x>
+     <y>84</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
