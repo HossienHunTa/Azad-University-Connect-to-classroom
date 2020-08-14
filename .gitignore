@@ -50,3 +50,10 @@ compile_commands.json
 
 # QtCreator local machine specific files for imported projects
 *creator.user*
+captcha.png
+chromedriver.exe
+Connect.py
+debug.log
+test.py
+table.txt
+Connect.py
