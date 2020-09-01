@@ -38,7 +38,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def seleniumuni(self):
         WINDOW_SIZE = "640,480"
         self.chrome_options = Options()
-        self.chrome_options.add_argument("headless")
+        #self.chrome_options.add_argument("headless")
         self.chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
         self.driver = webdriver.Chrome(chrome_options=self.chrome_options)
         self.driver.get('https://cms.iauq.ac.ir/')
@@ -52,8 +52,6 @@ class MainWindow(QtWidgets.QMainWindow):
     def handelbuttons(self):
         self.submit.clicked.connect(self.login)
         self.menu_about.triggered.connect(self.about)
-        #self.about.showMessage('About')
-        #self.button_about.clicked.connect(self.About) 
 
     def about(self):
         self.a = loadUi('about.ui')
@@ -69,21 +67,42 @@ class MainWindow(QtWidgets.QMainWindow):
             self.fildcaptcha.send_keys(captcha)
             self.btsubmit.click()
             try:
+                self.m = loadUi('main.ui', self)
+                self.handelbuttons()
+                self.master = QtWidgets.QComboBox(self.groupBox)
+                self.master.setGeometry(QtCore.QRect(20, 80, 450, 30))
+                self.master.setObjectName("master")
                 self.driver.get(r'https://cms.iauq.ac.ir/31/%D8%A2%D9%85%D9%88%D8%B2%D8%B4%DB%8C/%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8-%D9%88%D8%A7%D8%AD%D8%AF')
                 name = WebDriverWait(self.driver, 2).until(EC.presence_of_element_located((By.XPATH, "//span[@id='ContentPlaceHolder1__MemberBox1_lblTitle']")))
-                name = name.text
-                print('Login is sucssesful\nyour name : ',name)
-                #loadUi('main.ui', self)
+                self.name = name.text
+                self.inputfullname.setText(self.name)
+                self.inputstudentnumber.setText(username)
+                try:
+                    self.class_submit.clicked.connect(self.classroom)
+                    self.table = self.driver.find_element_by_xpath(f"//table[@id='ContentPlaceHolder1_ContentPlaceHolder1_ctl00_GridView2']/tbody")
+                    nutr = len(self.table.find_elements_by_tag_name("tr"))
+                    self.masters_links = {}
+                    for x in range(1,nutr+1):
+                        namemaster = self.driver.find_element_by_xpath(f"//table[@id='ContentPlaceHolder1_ContentPlaceHolder1_ctl00_GridView2']/tbody/tr[{x}]/td[4]")
+                        linkmaster = self.driver.find_element_by_xpath(f"//table[@id='ContentPlaceHolder1_ContentPlaceHolder1_ctl00_GridView2']/tbody/tr[{x}]/td[2]/a").get_attribute("href")
+                        classid = re.findall(r'C\d*', linkmaster)
+                        self.master.addItem(namemaster.text)
+                        self.masters_new = {f'{namemaster.text}': f"http://class.iauq.ac.ir/{classid[0]}",}
+                        self.masters_links = ChainMap(self.masters_links, self.masters_new)
+                        
+                except Exception as e:
+                    self.master.addItem('هیچ استادی یافت نشد.')
+                    print("Error >>  ",e)
+
+                self.driver.quit()
+                                
             except Exception as e:
-                #img = self.driver.find_element_by_xpath('//img[@id="ContentPlaceHolder1_Login1_imgCaptcha"]')
-                #get_captcha(self.driver, img, 0)
                 self.driver.quit()
                 self.seleniumuni()
                 self.pic.setPixmap(QtGui.QPixmap(r"captcha.png").scaled(110, 120, Qt.KeepAspectRatio, Qt.FastTransformation))
                 self.inputuser.setText('! اشتباه !')
                 self.inputpass.setText('! اشتباه !')
                 QtWidgets.QApplication.processEvents()
-                #self.submit.clicked.connect(self.login)
 
         elif username == '' or password == '':
             if username == '' and password == '':
@@ -93,6 +112,28 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.inputpass.setText('خالی نباشد')
             else:
                 self.inputuser.setText('خالی نباشد')
+    
+    def classroom(self):
+        fullname = self.inputfullname.text()
+        studentnumber = self.inputstudentnumber.text()
+        if fullname != '' and studentnumber != '':
+            ostad = str(self.master.currentText())
+            #con = self.browser.isChecked()
+            i = urlencode({'guestName':f"{studentnumber}-{fullname}",'launcher': 'true','html-view': 'false','proto': 'true'})
+            #if con == True :
+            #i = urlencode({'guestName':f"{studentnumber}-{fullname}",'launcher': 'false','html-view': 'true','proto': 'flase'})
+            if ostad in self.masters_links:
+                send = f"{self.masters_links[ostad]}?{i}"
+                print(send)
+                webbrowser.open(f"{send}")
+        elif fullname == '' or studentnumber == '':
+            if fullname == '' and studentnumber == '':
+                self.inputfullname.setText('خالی نباشد')
+                self.inputstudentnumber.setText('خالی نباشد')
+            elif fullname == '':
+                self.inputfullname.setText('خالی نباشد')
+            else:
+                self.inputstudentnumber.setText('خالی نباشد')
 
 
 def get_captcha(driver, img, captcha_number):
