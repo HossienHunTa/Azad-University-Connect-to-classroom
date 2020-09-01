@@ -7,6 +7,11 @@ from urllib.parse import urlencode
 from collections import ChainMap
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
@@ -20,12 +25,22 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__()
         QtWidgets.QMainWindow.__init__(self)
         loadUi('loginpage.ui', self)
+        self.seleniumuni()
+        self.InitUI()
+        self.handelbuttons()
+
+    def InitUI(self):
+        self.pic = QtWidgets.QLabel(self.centralwidget)
+        self.pic.setGeometry(QtCore.QRect(50, 100, 150, 20))
+        self.pic.setPixmap(QtGui.QPixmap(r"captcha.png").scaled(110, 120, Qt.KeepAspectRatio, Qt.FastTransformation))
+        self.show()
+
+    def seleniumuni(self):
         WINDOW_SIZE = "640,480"
-        #self.chrome_options = Options()
-        #self.chrome_options.add_argument("--headless")
-        #self.chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
-        #self.driver = webdriver.Chrome(chrome_options=self.chrome_options)
-        self.driver = webdriver.Chrome()
+        self.chrome_options = Options()
+        self.chrome_options.add_argument("headless")
+        self.chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
+        self.driver = webdriver.Chrome(chrome_options=self.chrome_options)
         self.driver.get('https://cms.iauq.ac.ir/')
         img = self.driver.find_element_by_xpath('//img[@id="ContentPlaceHolder1_Login1_imgCaptcha"]')
         get_captcha(self.driver, img, 0)
@@ -33,15 +48,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.fildpassword = self.driver.find_element_by_xpath("//input[@id='ContentPlaceHolder1_Login1_txtPassword']")
         self.fildcaptcha = self.driver.find_element_by_xpath("//input[@id='ContentPlaceHolder1_Login1_txtSecurityImage']")
         self.btsubmit = self.driver.find_element_by_xpath("//input[@id='ContentPlaceHolder1_Login1_btnLogin']")
-        self.InitUI()
-        self.handelbuttons()
-
-    def InitUI(self):
-        self.pic = QtWidgets.QLabel(self.centralwidget)
-        self.pic.setGeometry(QtCore.QRect(50, 100, 150, 20))
-        self.pic.setPixmap(QtGui.QPixmap(r"captcha.png").scaled(100, 100, Qt.KeepAspectRatio, Qt.FastTransformation))
-        self.show()
-
+    
     def handelbuttons(self):
         self.submit.clicked.connect(self.login)
         self.menu_about.triggered.connect(self.about)
@@ -57,19 +64,22 @@ class MainWindow(QtWidgets.QMainWindow):
         password = self.inputpass.text()
         captcha = self.inputcap.text()
         if username != '' and password != '':
-            self.fildusername.send_keys(f"{username}")
-            self.fildpassword.send_keys(f"{password}")
-            self.fildcaptcha.send_keys(f"{captcha}")
+            self.fildusername.send_keys(username)
+            self.fildpassword.send_keys(password)
+            self.fildcaptcha.send_keys(captcha)
             self.btsubmit.click()
             try:
                 self.driver.get(r'https://cms.iauq.ac.ir/31/%D8%A2%D9%85%D9%88%D8%B2%D8%B4%DB%8C/%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8-%D9%88%D8%A7%D8%AD%D8%AF')
-                name = self.driver.find_element_by_xpath("//span[@id='ContentPlaceHolder1__MemberBox1_lblTitle']").text
+                name = WebDriverWait(self.driver, 2).until(EC.presence_of_element_located((By.XPATH, "//span[@id='ContentPlaceHolder1__MemberBox1_lblTitle']")))
+                name = name.text
                 print('Login is sucssesful\nyour name : ',name)
                 #loadUi('main.ui', self)
             except Exception as e:
-                img = self.driver.find_element_by_xpath('//img[@id="ContentPlaceHolder1_Login1_imgCaptcha"]')
-                get_captcha(self.driver, img, 0)
-                self.pic.setPixmap(QtGui.QPixmap(r"captcha.png").scaled(100, 100, Qt.KeepAspectRatio, Qt.FastTransformation))
+                #img = self.driver.find_element_by_xpath('//img[@id="ContentPlaceHolder1_Login1_imgCaptcha"]')
+                #get_captcha(self.driver, img, 0)
+                self.driver.quit()
+                self.seleniumuni()
+                self.pic.setPixmap(QtGui.QPixmap(r"captcha.png").scaled(110, 120, Qt.KeepAspectRatio, Qt.FastTransformation))
                 self.inputuser.setText('! اشتباه !')
                 self.inputpass.setText('! اشتباه !')
                 QtWidgets.QApplication.processEvents()
