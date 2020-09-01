@@ -10,19 +10,19 @@
     <x>0</x>
     <y>0</y>
     <width>200</width>
-    <height>170</height>
+    <height>250</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>200</width>
-    <height>170</height>
+    <height>250</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>200</width>
-    <height>170</height>
+    <height>250</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -82,14 +82,36 @@
    <widget class="QPushButton" name="submit">
     <property name="geometry">
      <rect>
-      <x>58</x>
-      <y>100</y>
-      <width>90</width>
+      <x>43</x>
+      <y>180</y>
+      <width>120</width>
       <height>30</height>
      </rect>
     </property>
     <property name="text">
      <string>ورود</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="inputcap">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>130</y>
+      <width>90</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="dragEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="readOnly">
+     <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>تصویر امنیتی</string>
     </property>
    </widget>
   </widget>
@@ -102,55 +124,39 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuLang">
-    <property name="title">
-     <string>زبان</string>
-    </property>
-    <addaction name="langen"/>
-    <addaction name="langffa"/>
-   </widget>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="help">
     <property name="title">
      <string>راهنما</string>
     </property>
-    <addaction name="action"/>
+    <addaction name="menu_about"/>
    </widget>
-   <addaction name="menuLang"/>
-   <addaction name="menu"/>
+   <addaction name="help"/>
   </widget>
   <action name="langen">
    <property name="text">
     <string>En</string>
    </property>
   </action>
-  <action name="langffa">
+  <action name="langfa">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Fa</string>
    </property>
   </action>
-  <action name="action">
+  <action name="menu_about">
    <property name="text">
     <string>درباره من</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
    </property>
   </action>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>submit</sender>
-   <signal>clicked()</signal>
-   <receiver>loginpage</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>102</x>
-     <y>135</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>99</x>
-     <y>84</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
