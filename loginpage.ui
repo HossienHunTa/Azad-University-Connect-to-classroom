@@ -28,6 +28,10 @@
   <property name="windowTitle">
    <string>صفحه ورود</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>FxHome.Ir_daneshgah-azad.png</normaloff>FxHome.Ir_daneshgah-azad.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLineEdit" name="inputuser">
     <property name="geometry">

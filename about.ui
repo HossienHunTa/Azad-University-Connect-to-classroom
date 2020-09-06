@@ -31,6 +31,10 @@
   <property name="windowTitle">
    <string>درباره من</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>FxHome.Ir_daneshgah-azad.png</normaloff>FxHome.Ir_daneshgah-azad.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
