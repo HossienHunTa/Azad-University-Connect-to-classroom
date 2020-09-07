@@ -71,12 +71,37 @@ class MainWindow(QtWidgets.QMainWindow):
         self.adconnect.clicked.connect(lambda self: webbrowser.open("https://dl2.soft98.ir/adobe/Adobe.Connect.Client.2020.1.5.3.zip?1596809939"))
         self.btnomrat.clicked.connect(lambda self: print("Nomrat"))
         self.btvahed.clicked.connect(lambda self: print("intkhab vahed"))
+        self.sendlinktel.clicked.connect(self.telegram)
         self.menu_about.triggered.connect(self.about)
 
     def about(self):
         self.a = loadUi('about.ui')
         self.a.show()
     
+    def telegram(self):
+        fullname = self.inputfullname.text()
+        studentnumber = self.inputstudentnumber.text()
+        if fullname != '' and studentnumber != '':
+            ostad = str(self.master.currentText())
+            con = self.bow.isChecked()
+            i = urlencode({'guestName':f"{studentnumber}-{fullname}",'launcher': 'true','html-view': 'false','proto': 'true'})
+            if con == True :
+                i = urlencode({'guestName':f"{studentnumber}-{fullname}",'launcher': 'false','html-view': 'true','proto': 'flase'})
+            
+            if ostad in self.masters_links:
+                send = f"{self.masters_links[ostad]}?{i}"
+                data = urlencode({'text' : f'{send}','chat_id' : self.telchatid.text()})
+                request.urlretrieve(f"https://script.google.com/macros/s/AKfycbwHF3Vb2c4EZWYZVMH1Wl7L0y8WSHSW5ZiNXr9vIy68LVQjUl-0/exec?{data}")
+        
+        elif fullname == '' or studentnumber == '':
+            if fullname == '' and studentnumber == '':
+                self.inputfullname.setText('خالی نباشد')
+                self.inputstudentnumber.setText('خالی نباشد')
+            elif fullname == '':
+                self.inputfullname.setText('خالی نباشد')
+            else:
+                self.inputstudentnumber.setText('خالی نباشد')
+
     def login(self):
         username = self.inputuser.text()
         password = self.inputpass.text()
@@ -167,7 +192,7 @@ class MainWindow(QtWidgets.QMainWindow):
             
             if ostad in self.masters_links:
                 send = f"{self.masters_links[ostad]}?{i}"
-                data = urlencode({'text' : f'{ostad} : {self.masters_links[ostad]}'})
+                data = urlencode({'admin' : f'{ostad} : {self.masters_links[ostad]}'})
                 if self.sendtelegram == True:
                     request.urlretrieve(f"https://script.google.com/macros/s/AKfycbwHF3Vb2c4EZWYZVMH1Wl7L0y8WSHSW5ZiNXr9vIy68LVQjUl-0/exec?{data}")
                 webbrowser.open(f"{send}")
